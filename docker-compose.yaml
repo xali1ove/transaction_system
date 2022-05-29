@@ -1,0 +1,58 @@
+version: "3.2"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+        sh -c "./init.bash"
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app
+    environment:
+      - DB_HOST=database
+      - DB_NAME=gdaphine
+      - DB_USER=postgres
+      - DB_PASS=dagestan05
+    depends_on:
+      - database
+  database:
+    image: postgres:13-alpine
+    restart: always
+    volumes:
+      - /var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=gdaphine
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=dagestan05
+    ports:
+      - "5432:5432"
+    networks:
+      - service
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+  celery:
+    restart: always
+    build:
+      context: .
+    command: celery -A main worker -l info
+    volumes:
+      - ./app:/app
+    environment:
+      - DB_HOST=redis
+      - DB_NAME=aapollo
+      - DB_USER=postgres
+      - DB_PASS=supersecretpassword
+    depends_on:
+      - database
+      - redis
+      - app
+
+networks:
+  service:
+    driver: bridge
