@@ -20,16 +20,22 @@
 docker-compose services:
 
 app
+
 celery
+
 database
+
 redis
+
 
 To build project and to install all dependences use command:
 
 docker-compose build
+
 To run server use:
 
 docker-compose up
+
 To stop any service use:
 
 docker-compose stop [name of service]
@@ -37,4 +43,5 @@ docker-compose stop [name of service]
 The Django admin site:
 
 Host: localhost
+
 Port: 8000
