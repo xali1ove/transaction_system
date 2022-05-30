@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Client
+from .tasks import change_balance
 
 
 class ClientSerializer(serializers.ModelSerializer):
@@ -12,11 +13,6 @@ class ClientSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password': {'write_only': True}
         }
-
-    def validate_change_balance_value(self, value):
-        if self.instance.balance_value + value < 0:
-            serializers.ValidationError("Balance should be positive.")
-        return value
 
     def save(self, **kwargs):
         username = self.validated_data.get('username')
@@ -31,6 +27,5 @@ class ClientSerializer(serializers.ModelSerializer):
         return super().save(**kwargs)
 
     def update(self, instance, validated_data):
-        instance.balance_value += self.validated_data.get('change_balance_value', 0)
-        instance.save()
+        change_balance.delay(instance, self.validated_data.get('change_balance_value'))
         return instance

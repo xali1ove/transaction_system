@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     command: >
-        sh -c "./init.bash"
+        sh -c "./build.sh"
     restart: always
     ports:
       - "8000:8000"
@@ -40,14 +40,14 @@ services:
     restart: always
     build:
       context: .
-    command: celery -A main worker -l info
+    command: celery -A tasks worker -l info
     volumes:
       - ./app:/app
     environment:
       - DB_HOST=redis
-      - DB_NAME=aapollo
+      - DB_NAME=gdaphine
       - DB_USER=postgres
-      - DB_PASS=supersecretpassword
+      - DB_PASS=dagestan05
     depends_on:
       - database
       - redis

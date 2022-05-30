@@ -2,7 +2,7 @@ from django.test import TestCase
 from rest_framework import status
 from django.urls import reverse
 from .models import Client
-from rest_framework.test import APIRequestFactory,APITestCase
+from rest_framework.test import APITestCase
 
 
 # Create your tests here.
@@ -21,8 +21,7 @@ class RegistrationTestCase(APITestCase):
 
         response = self.client.post(change_balance_url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-
+        self.assertEqual(client.balance_value, 100)
 
     def test_registration(self):
         data = {
