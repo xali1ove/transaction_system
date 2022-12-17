@@ -15,9 +15,9 @@
 1) бд на postgresql, где будет схема с клиентами и их балансами
 2) сервер, которые проверяет все условия(хватает ли денег, если сервер упадет, то история, которая идет на вывод не должна пропасть) и делает изменение баланса(на + или -)
 
-# implementation
+# Implementation
 
-docker-compose services:
+## docker-compose services:
 
 app
 
@@ -28,7 +28,7 @@ database
 redis
 
 
-To build project and to install all dependences use command:
+## To build project and to install all dependences use command:
 
 docker-compose build
 
