@@ -19,13 +19,13 @@
 
 ## docker-compose services:
 
-app
+*app*
 
-celery
+*celery*
 
-database
+*database*
 
-redis
+*redis*
 
 
 ## To build project and to install all dependences use command:
