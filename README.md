@@ -1,4 +1,4 @@
-# transaction_system
+# Transaction System
 
 Реализация системы транзакций.
 
